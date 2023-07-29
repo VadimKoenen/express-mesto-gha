@@ -26,6 +26,7 @@ module.exports.getCards = (req, res) => { // *
 //удаление
 module.exports.deleteCardById = (req, res) => {
   Card.findByIdAndRemove(req.params.id)
+    .orFail(() => new Error('Not found'))
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       if (err.message === 'Not found') {
@@ -44,6 +45,7 @@ module.exports.addLike = (req, res) => Card.findByIdAndUpdate(
   { $addToSet: { likes: req.user._id } },
   { new: true },
 )
+  .orFail(() => new Error('Not found'))
   .then((card) => res.status(200).send(card))
   .catch((err) => {
     if (err.message === 'Not found') {
@@ -64,6 +66,7 @@ module.exports.removeLike = (req, res) => {
       new: true,
     },
   )
+    .orFail(() => new Error('Not found'))
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       if (err.message === 'Not found') {
