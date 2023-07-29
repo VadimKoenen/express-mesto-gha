@@ -15,4 +15,9 @@
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
 
+## Описание
+
+Бэкэнд проекта Место. Написано на Espress.js, связано с mongo, реализованы роуты, контроллеры.
+
+## Ссылка 
 https://github.com/VadimKoenen/express-mesto-gha
