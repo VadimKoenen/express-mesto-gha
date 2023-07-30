@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const cardRoute = require('./router/cards');
 const userRoute = require('./router/users');
+const {NOT_FOUND} = require('../utils/consts');
 
 // подключение к серверу монго
 const mongoDB = 'mongodb://127.0.0.1:27017/mestodb';
@@ -39,9 +40,9 @@ app.use((req, res, next) => { // код из брифа по добавлени�
 app.use('/cards', cardRoute); // получает роуты, в которых содержатся запросы и ответы на них
 app.use('/users', userRoute);
 app.use('*', (req, res) => {
-  res.status(404).send({ message: 'Страница не найдена' });
+  res.status(NOT_FOUND).send({ message: 'Страница не найдена' });
 });
-git 
+
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
