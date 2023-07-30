@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const cardRoute = require('./router/cards');
 const userRoute = require('./router/users');
-const {NOT_FOUND} = require('../utils/consts');
+const { NOT_FOUND } = require('./utils/consts');
 
 // подключение к серверу монго
 const mongoDB = 'mongodb://127.0.0.1:27017/mestodb';
