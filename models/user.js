@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-//require('mongoose-type-url');
+// require('mongoose-type-url');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     required: true,
-   //  type: mongoose.SchemaTypes.Url,
-   },
+    //  type: mongoose.SchemaTypes.Url,
+  },
 });
 
 module.exports = mongoose.model('user', userSchema);

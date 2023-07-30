@@ -1,10 +1,9 @@
 const express = require('express');
-const path = require('path');
+
 const { PORT = 3000 } = process.env;
 
 const app = express();
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
 const cors = require('cors');
 
 const cardRoute = require('./router/cards');
@@ -12,13 +11,12 @@ const userRoute = require('./router/users');
 
 // подключение к серверу монго
 const mongoDB = 'mongodb://127.0.0.1:27017/mestodb';
-mongoose.connect(mongoDB, //{
- // useNewUrlParser: true,
- // useCreateIndex: true,
- // useUnifiedTopology: true,
- // useFindAndModify: false
-//});
-);
+mongoose.connect(mongoDB); // {
+// useNewUrlParser: true,
+// useCreateIndex: true,
+// useUnifiedTopology: true,
+// useFindAndModify: false
+// });
 
 mongoose.Promise = global.Promise;
 
@@ -43,12 +41,7 @@ app.use('/users', userRoute);
 app.use('*', (req, res) => {
   res.status(404).send({ message: 'Страница не найдена' });
 });
-
+git 
 app.listen(PORT, () => {
-    // Если всё работает, консоль покажет, какой порт приложение слушает
-    console.log(`App listening on port ${PORT}`)
-});
-
-app.get('/', (req, res) => {
-  res.send('порт работает 3000');
+  console.log(`App listening on port ${PORT}`);
 });
