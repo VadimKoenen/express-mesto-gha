@@ -9,16 +9,16 @@ const {
 } = require('../controllers/users');
 
 const {
-  signUpValidation,
+  signInValidation,
   userValidation,
 } = require('../middlewares/validation');
 
-router.post('/signin', userValidation, login);
-router.post('/signup', signUpValidation, createUser);
+router.post('/signin', signInValidation, login);
+router.post('/signup', userValidation, createUser);
 
 router.use(auth);
 
-router.use('/cards', auth, cardsRouter);
-router.use('/users', auth, userRouter);
+router.use('/cards', cardsRouter);
+router.use('/users', userRouter);
 
 module.exports = router;

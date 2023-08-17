@@ -10,15 +10,15 @@ const {
 
 const {
   getUserByIdValidation,
-  updateProfileDataValidation,
-  updateAvatarAvatarValidation,
+  updateProfileValidation,
+  updateAvatarValidation,
 } = require('../middlewares/validation');
 
 router.get('/', getUsers);
 router.get('/:id', getUserByIdValidation, getUserById);
 router.get('/me', getUserData);
 
-router.patch('/me', updateProfileDataValidation, updateProfile);
-router.patch('/me/avatar', updateAvatarAvatarValidation, updateAvatar);
+router.patch('/me', updateProfileValidation, updateProfile);
+router.patch('/me/avatar', updateAvatarValidation, updateAvatar);
 
 module.exports = router;

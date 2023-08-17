@@ -42,8 +42,6 @@ app.use(express.json()); // создает наполнение req.body
 // });
 app.use(helmet());
 
-app.use(auth);
-
 app.use(routes);
 
 app.use('*', (req, res, next) => {
