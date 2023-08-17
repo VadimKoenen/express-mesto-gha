@@ -1,10 +1,9 @@
 const jwt = require('jsonwebtoken');
-
 const UNAUTHORIZED = require('../utils/UNAUTHORIZED');
 
-const { NODE_ENV, JWT_SECRET } = process.env; //
+const auth = (req, res, next) => {
+  const { NODE_ENV, JWT_SECRET } = process.env;
 
-module.exports.auth = (req, res, next) => {
   const token = req.cookies.jwt;
   let payload;
 
@@ -16,3 +15,5 @@ module.exports.auth = (req, res, next) => {
   req.user = payload;
   next();
 };
+
+module.exports = auth;

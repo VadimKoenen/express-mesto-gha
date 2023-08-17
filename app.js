@@ -9,7 +9,6 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { NOT_FOUND } = require('./utils/consts');
-const auth = require('./middlewares/auth');
 const routes = require('./router/routes');
 
 const { error500 } = require('./middlewares/error');

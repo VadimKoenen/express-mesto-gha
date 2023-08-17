@@ -37,12 +37,16 @@ module.exports.createUser = (req, res, next) => {
         password: hash,
       });
     })
-    .then((user) => res.send(user))
+    .then((user) => res.send({
+      _id: user._id,
+      name: user.name,
+      about: user.about,
+      email: user.email,
+      avatar: user.avatar,
+    }))
     .catch((err) => {
       if (err.code === 11000) {
         return next(new CONFLICT('User already is registred'));
-      } if (err.name === 'CastError') {
-        next(new BAD_REQUEST('Uncorrect data'));
       }
       return next(err);
     });
@@ -148,10 +152,8 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getUserData = (req, res, next) => { // users/me
-  User.findById(req.user.id)
+  User.findById(req.user._id)
     .orFail(() => new NOT_FOUND('Not found'))
-    // если возвращен пустой объект, создать ошибку
-    // и потом выполнение кода перейдет в catch, где ошибка будет обработана
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
