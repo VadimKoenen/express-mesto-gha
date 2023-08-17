@@ -12,7 +12,7 @@ module.exports.createCard = (req, res, next) => {
     ...req.body,
     name,
     link,
-    owner: req.user._id,
+    owner: req.user.id,
   })
     .then((card) => res.send(card))
     .catch((err) => {
