@@ -40,7 +40,7 @@ module.exports.createUser = (req, res, next) => {
         password: hash,
       });
     })
-    .then((user) => res.send(user))
+    .then((user) => res.send({ data: user.toJSON() }))
     .catch((err) => {
       if (err.code === 11000) {
         return next(new CONFLICT('User already is registred'));
