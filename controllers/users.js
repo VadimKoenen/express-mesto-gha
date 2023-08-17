@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -31,16 +31,14 @@ module.exports.createUser = (req, res, next) => {
   }
   return bcrypt
     .hash(req.body.password, 10)
-    .then((hash) => {
-      User.create({
-        name,
-        about,
-        avatar,
-        email,
-        password: hash,
-      });
-    })
-    .then((user) => res.send({ data: user.toJSON() }))
+    .then((hash) => User.create({
+      name,
+      about,
+      avatar,
+      email,
+      password: hash,
+    }))
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.code === 11000) {
         return next(new CONFLICT('User already is registred'));

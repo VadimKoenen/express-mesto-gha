@@ -13,12 +13,11 @@ const routes = require('./router/routes');
 const { error500 } = require('./middlewares/error');
 // подключение к серверу монго
 const mongoDB = 'mongodb://127.0.0.1:27017/mestodb';
-mongoose.connect(mongoDB); // {
-// useNewUrlParser: true,
-// useCreateIndex: true,
-// useUnifiedTopology: true,
-// useFindAndModify: false
-// });
+mongoose.connect(mongoDB, {
+  useNewUrlParser: true,
+  //useCreateIndex: true,
+  useUnifiedTopology: true,
+});
 
 mongoose.Promise = global.Promise;
 
