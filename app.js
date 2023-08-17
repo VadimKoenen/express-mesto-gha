@@ -15,7 +15,6 @@ const { error500 } = require('./middlewares/error');
 const mongoDB = 'mongodb://127.0.0.1:27017/mestodb';
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,
-  //useCreateIndex: true,
   useUnifiedTopology: true,
 });
 
