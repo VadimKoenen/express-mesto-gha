@@ -9,7 +9,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const routes = require('./router/routes');
-
+const cookieParser = require('cookie-parser');
 const { error500 } = require('./middlewares/error');
 // подключение к серверу монго
 const mongoDB = 'mongodb://127.0.0.1:27017/mestodb';
@@ -39,6 +39,8 @@ app.use(express.json()); // создает наполнение req.body
 //  next();
 // });
 app.use(helmet());
+
+app.use(cookieParser());
 
 app.use(routes);
 
