@@ -133,7 +133,7 @@ module.exports.login = (req, res, next) => {
             // создать JWT
             const token = jwt.sign(
               {
-                id: user.id,
+                id: user._id,
               },
               NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
             );
@@ -155,7 +155,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getUserData = (req, res, next) => { // users/me
-  User.findById(req.user._id)
+  User.findById(req.user.id)
     .orFail()
     .then((user) => res.send(user))
     .catch(next);
