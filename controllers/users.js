@@ -26,7 +26,10 @@ module.exports.createUser = (req, res, next) => {
     email,
     password,
   } = req.body;
-  bcrypt
+  if (!email || !password) {
+    return next(new BAD_REQUEST('One of the fields or more is not filled'));
+  }
+  return bcrypt
     .hash(password, 10)
     .then((hash) => {
       User.create({
@@ -38,7 +41,7 @@ module.exports.createUser = (req, res, next) => {
       });
     })
     .then((user) => res.send({
-      _id: user._id,
+      id: user.id,
       name: user.name,
       about: user.about,
       email: user.email,
@@ -68,7 +71,7 @@ module.exports.getUserById = (req, res, next) => {
 // обновление профиля
 module.exports.updateProfile = (req, res, next) => {
   User.findByIdAndUpdate(
-    req.user._id,
+    req.user.id,
     {
       name: req.body.name,
       about: req.body.about,
@@ -92,7 +95,7 @@ module.exports.updateProfile = (req, res, next) => {
 // обновление аватара
 module.exports.updateAvatar = (req, res, next) => {
   User.findByIdAndUpdate(
-    req.user._id,
+    req.user.id,
     {
       avatar: req.body.avatar,
     },
@@ -130,7 +133,7 @@ module.exports.login = (req, res, next) => {
             // создать JWT
             const token = jwt.sign(
               {
-                id: user._id,
+                id: user.id,
               },
               NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
             );
@@ -152,7 +155,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getUserData = (req, res, next) => { // users/me
-  User.findById(req.user._id)
+  User.findById(req.user.id)
     .orFail(() => new NOT_FOUND('Not found'))
     .then((user) => res.send(user))
     .catch((err) => {

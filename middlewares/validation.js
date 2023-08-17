@@ -8,7 +8,7 @@ module.exports.userValidation = celebrate({
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(RegexUrl),
+    avatar: Joi.string().regex(RegexUrl),
   }),
 });
 
@@ -34,14 +34,14 @@ module.exports.updateProfileValidation = celebrate({
 
 module.exports.updateAvatarValidation = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().pattern(RegexUrl),
+    avatar: Joi.string().regex(RegexUrl),
   }),
 });
 
 module.exports.createCardValidation = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
-    link: Joi.string().pattern(RegexUrl).required(),
+    link: Joi.string().regex(RegexUrl).required(),
   }),
 });
 
