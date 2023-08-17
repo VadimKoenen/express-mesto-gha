@@ -30,7 +30,7 @@ module.exports.createUser = (req, res, next) => {
     return next(new BAD_REQUEST('One of the fields or more is not filled'));
   }
   return bcrypt
-    .hash(password, 10)
+    .hash(req.body.password, 10)
     .then((hash) => {
       User.create({
         name,
@@ -40,13 +40,7 @@ module.exports.createUser = (req, res, next) => {
         password: hash,
       });
     })
-    .then((user) => res.send({
-      id: user.id,
-      name: user.name,
-      about: user.about,
-      email: user.email,
-      avatar: user.avatar,
-    }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.code === 11000) {
         return next(new CONFLICT('User already is registred'));
