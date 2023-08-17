@@ -155,13 +155,8 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getUserData = (req, res, next) => { // users/me
-  User.findById(req.user.id)
-    .orFail(() => new NOT_FOUND('Not found'))
+  User.findById(req.user._id)
+    .orFail()
     .then((user) => res.send(user))
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        return next(new BAD_REQUEST('One of the fields or more is not filled'));
-      }
-      return next(err);
-    });
+    .catch(next);
 };
