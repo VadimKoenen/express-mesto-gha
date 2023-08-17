@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// require('mongoose-type-url');
+const { isURL } = require('validator');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -11,6 +11,7 @@ const cardSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
+    validate: [isURL, 'Invalid avatar URL'],
     // type: mongoose.SchemaTypes.Url,
   },
   owner: {
