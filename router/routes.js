@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const userRouter = require('./users');
 const cardsRouter = require('./cards');
-const { auth } = require('../middlewares/auth');
+const auth = require('../middlewares/auth');
 const {
   login,
   createUser,

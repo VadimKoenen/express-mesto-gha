@@ -3,7 +3,7 @@ module.exports.error500 = (err, _, res, next) => {
   res.status(statusCode)
     .send({
       message: statusCode === 500
-        ? 'InternalServerError'
+        ? 'Ошибка  500 в апп'
         : message,
     });
   next();
