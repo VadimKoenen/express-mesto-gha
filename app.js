@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-const { NOT_FOUND } = require('./utils/consts');
 const routes = require('./router/routes');
 
 const { error500 } = require('./middlewares/error');
@@ -26,7 +25,7 @@ mongoose.Promise = global.Promise;
 // CORS
 app.use(cors({
   origin: ['http://localhost: 3000'], // порт
-  credentials: true, // разрешить куки
+  credentials: true, // куки
   methods: ['GET', 'PUT', 'POST', 'PATCH', 'DEL'],
 }));
 
@@ -42,10 +41,6 @@ app.use(express.json()); // создает наполнение req.body
 app.use(helmet());
 
 app.use(routes);
-
-app.use('*', (req, res, next) => {
-  throw next(new NOT_FOUND('Not found'));
-});
 
 app.use(errors());
 
