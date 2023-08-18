@@ -32,7 +32,7 @@ module.exports.getCards = (req, res, next) => {
 
 // удаление
 module.exports.deleteCardById = (req, res, next) => {
-  Card.findByIdAndRemove(req.params.id)
+  Card.findById(req.params.id)
     .orFail(() => new NOT_FOUND('Not found'))
     .then((card) => {
       if (card.owner.toString() !== req.user.id) {
@@ -42,9 +42,7 @@ module.exports.deleteCardById = (req, res, next) => {
     })
     .then(() => res.send({ message: 'Card deleted' }))
     .catch((err) => {
-      if (err.message === 'Notfound') {
-        return next(new NOT_FOUND('Not found'));
-      } if (err.name === 'CastError') {
+      if (err.name === 'CastError') {
         return next(new BAD_REQUEST('Uncorrect data'));
       }
       return next(err);

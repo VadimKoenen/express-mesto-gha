@@ -26,11 +26,8 @@ module.exports.createUser = (req, res, next) => {
     email,
     password,
   } = req.body;
-  if (!email || !password) {
-    return next(new BAD_REQUEST('One of the fields or more is not filled'));
-  }
-  return bcrypt
-    .hash(req.body.password, 10)
+  bcrypt
+    .hash(password, 10)
     .then((hash) => User.create({
       name,
       about,
@@ -109,11 +106,9 @@ module.exports.updateAvatar = (req, res, next) => {
 module.exports.login = (req, res, next) => {
   // проверка наличия полей
   const { email, password } = req.body;
-  if (!email || !password) {
-    return next(new BAD_REQUEST('One of the fields or more is not filled'));
-  }
+
   // пользователь с email
-  return User.findOne({ email })
+  User.findOne({ email })
     .select('+password')
     .orFail(() => new UNAUTHORIZED('User not found'))
     .then((user) => {

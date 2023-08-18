@@ -10,10 +10,10 @@ const auth = (req, res, next) => {
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
   } catch (err) {
-    next(new UNAUTHORIZED('Unauthorized!'));
+    return next(new UNAUTHORIZED('Unauthorized!'));
   }
   req.user = payload;
-  next();
+  return next();
 };
 
 module.exports = auth;

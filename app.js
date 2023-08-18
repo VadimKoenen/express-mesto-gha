@@ -10,6 +10,7 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const routes = require('./router/routes');
+const { NOT_FOUND } = require('./utils/consts');
 const { error500 } = require('./middlewares/error');
 // подключение к серверу монго
 const mongoDB = 'mongodb://127.0.0.1:27017/mestodb';
@@ -41,6 +42,10 @@ app.use(helmet());
 app.use(cookieParser());
 
 app.use(routes);
+
+app.use('*', (req, res) => {
+  res.status(NOT_FOUND).send({ message: 'Not found' });
+});
 
 app.use(errors());
 
