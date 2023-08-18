@@ -107,18 +107,17 @@ module.exports.updateAvatar = (req, res, next) => {
 
 // логин
 module.exports.login = (req, res, next) => {
-  // Вытащить email и password
+  // проверка наличия полей
   const { email, password } = req.body;
-  // чтобы не нагружать сервер проверим сразу наличие полей
   if (!email || !password) {
     return next(new BAD_REQUEST('One of the fields or more is not filled'));
   }
-  // Проверить существует ли пользователь с таким email
+  // пользователь с email
   return User.findOne({ email })
     .select('+password')
     .orFail(() => new UNAUTHORIZED('User not found'))
     .then((user) => {
-      // Проверить совпадает ли пароль
+      // пароль
       bcrypt.compare(password, user.password)
         .then((isOriginUser) => {
           if (isOriginUser) {
@@ -129,24 +128,22 @@ module.exports.login = (req, res, next) => {
               },
               NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
             );
-            // переменная окружения хранит секретое слово для создания куки
-            // прикрепить его к куке
+            // кука
             res.cookie('jwt', token, {
               maxAge: 360000,
               httpOnly: true,
               sameSite: true,
             });
-            // Если совпадает - вернуть пользователя без данных пароля
             return res.send({ data: user.toJSON() });
           }
-          // Если не совпадает - вернуть ошибку
-          return next(new UNAUTHORIZED('Invalid email or password')); // 403 Неправильный пароль Forbidden заменен 401
+          return next(new UNAUTHORIZED('Invalid email or password'));
         });
     })
     .catch(next);
 };
 
-module.exports.getUserData = (req, res, next) => { // users/me
+// users/me
+module.exports.getUserData = (req, res, next) => {
   User.findById(req.user.id)
     .orFail()
     .then((user) => res.send(user))
