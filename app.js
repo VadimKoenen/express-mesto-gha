@@ -43,7 +43,7 @@ app.use(cookieParser());
 
 app.use(routes);
 
-app.use('*', (req, res) => {
+app.use('/', (req, res) => {
   res.status(NOT_FOUND).send({ message: 'Not found' });
 });
 
